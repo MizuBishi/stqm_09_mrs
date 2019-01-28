@@ -5,6 +5,8 @@
 # Maven
 /target/
 
+.idea/
+
 # Elcipse
 .project
 .classpath

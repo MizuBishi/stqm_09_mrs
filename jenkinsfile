@@ -1,0 +1,30 @@
+pipeline {
+  agent any
+  tools {
+    maven 'Maven 3.6.0'
+    jdk 'JDK10'
+  }
+  stages {
+    stage('Checkout') {
+      steps {
+        sh 'mvn clean'
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'mvn package'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'mkdir -p /var/jenkins_home/download'
+        sh 'cp ./target/*.jar /var/jenkins_home/download'
+      }
+    }
+  }
+  post {
+    always {
+      junit 'target/surefire-reports/TEST-PersonTest.xml'
+    }
+  }
+}
